@@ -6,18 +6,34 @@ require_once '../core/Controller.php';
 require_once '../core/Model.php';
 require_once '../core/View.php';
 
+// Dodaj jednostavni autoloader
+spl_autoload_register(function ($class_name) {
+    $paths = [
+        '../app/controllers/',
+        '../app/models/',
+        '../core/'
+    ];
+
+    foreach ($paths as $path) {
+        $file = $path . $class_name . '.php';
+        if (file_exists($file)) {
+            require_once $file;
+            return;
+        }
+    }
+});
+
 // Jednostavni router za rukovanje URL-ovima
 $url = isset($_GET['url']) ? $_GET['url'] : '';
 $url = rtrim($url, '/');
 $url = filter_var($url, FILTER_SANITIZE_URL);
 $url = explode('/', $url);
 
-$controllerName = !empty($url[0]) ? ucfirst($url[0]) . 'Controller' : 'HomeController';
+$controllerName = !empty($url[0]) ? ucfirst($url[0]) . 'Controller' : 'ScheduleController'; // Postavi ScheduleController kao zadani kontroler
 $methodName = isset($url[1]) ? $url[1] : 'index';
 $params = array_slice($url, 2);
 
-if (file_exists('../app/controllers/' . $controllerName . '.php')) {
-    require_once '../app/controllers/' . $controllerName . '.php';
+if (class_exists($controllerName)) {
     $controller = new $controllerName();
 
     if (method_exists($controller, $methodName)) {
