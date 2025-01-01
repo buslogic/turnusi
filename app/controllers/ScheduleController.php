@@ -29,7 +29,7 @@ class ScheduleController extends Controller {
 
         $scheduleModel = $this->model('Schedule');
         $scheduleModel->create($driver_id, $bus_id, $route_id, $departure_time, $arrival_time);
-        header('Location: /schedule/index');
+        header('Location: /turnusi/public/schedule/index');
     }
 }
 ?>

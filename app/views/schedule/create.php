@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Dodaj Novi Raspored</h1>
-<form action="/schedule/store" method="post">
+<form action="/turnusi/public/schedule/store" method="post">
     <label for="driver_id">Vozač:</label>
     <select name="driver_id" id="driver_id">
         <?php foreach($data['drivers'] as $driver): ?>

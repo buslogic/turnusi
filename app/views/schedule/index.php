@@ -30,6 +30,6 @@
     <?php endforeach; ?>
     </tbody>
 </table>
-<a href="/schedule/create">Dodaj Novi Raspored</a>
+<a href="/turnusi/public/schedule/create">Dodaj Novi Raspored</a>
 </body>
 </html>
