@@ -29,7 +29,7 @@ $url = rtrim($url, '/');
 $url = filter_var($url, FILTER_SANITIZE_URL);
 $url = explode('/', $url);
 
-$controllerName = !empty($url[0]) ? ucfirst($url[0]) . 'Controller' : 'ScheduleController'; // Postavi ScheduleController kao zadani kontroler
+$controllerName = !empty($url[0]) ? ucfirst($url[0]) . 'Controller' : 'ScheduleController';
 $methodName = isset($url[1]) ? $url[1] : 'index';
 $params = array_slice($url, 2);
 
