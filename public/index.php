@@ -1,47 +1,44 @@
-<?php
-// public/index.php
-
-require_once '../config/config.php';
-require_once '../core/Controller.php';
-require_once '../core/Model.php';
-require_once '../core/View.php';
-
-// Dodaj jednostavni autoloader
-spl_autoload_register(function ($class_name) {
-    $paths = [
-        '../app/controllers/',
-        '../app/models/',
-        '../core/'
-    ];
-
-    foreach ($paths as $path) {
-        $file = $path . $class_name . '.php';
-        if (file_exists($file)) {
-            require_once $file;
-            return;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Autobuski Prevoznik</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
         }
-    }
-});
+        .menu {
+            background-color: #333;
+            overflow: hidden;
+        }
+        .menu a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .menu a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <a href="index.php?url=stajalista">Stajališta</a>
+        <!-- Dodajte druge meni opcije ovde -->
+    </div>
 
-// Jednostavni router za rukovanje URL-ovima
-$url = isset($_GET['url']) ? $_GET['url'] : '';
-$url = rtrim($url, '/');
-$url = filter_var($url, FILTER_SANITIZE_URL);
-$url = explode('/', $url);
-
-$controllerName = !empty($url[0]) ? ucfirst($url[0]) . 'Controller' : 'ScheduleController'; // Postavi ScheduleController kao zadani kontroler
-$methodName = isset($url[1]) ? $url[1] : 'index';
-$params = array_slice($url, 2);
-
-if (class_exists($controllerName)) {
-    $controller = new $controllerName();
-
-    if (method_exists($controller, $methodName)) {
-        call_user_func_array([$controller, $methodName], $params);
-    } else {
-        echo 'Method ' . $methodName . ' not found!';
-    }
-} else {
-    echo 'Controller ' . $controllerName . ' not found!';
-}
-?>
+    <div class="content">
+        <?php
+        // Uključite odgovarajući sadržaj na osnovu URL-a
+        if (isset($_GET['url']) && $_GET['url'] == 'stajalista') {
+            require 'app/views/stajalista.php';
+        } else {
+            echo '<h1>Dobrodošli na početnu stranicu</h1>';
+        }
+        ?>
+    </div>
+</body>
+</html>
