@@ -27,7 +27,10 @@ class Router {
             $controller = new $controllerName();
             $controller->$actionName();
         } else {
-            echo "Controller file not found: " . $controllerFile;
+            // Koristite podrazumevani kontroler ako fajl ne postoji
+            require 'app/controllers/HomeController.php';
+            $controller = new HomeController();
+            $controller->index();
         }
     }
 }
