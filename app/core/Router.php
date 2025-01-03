@@ -20,9 +20,14 @@ class Router {
             $actionName = $uriParts[1];
         }
 
-        // Uključite i instancirajte kontroler
-        require 'app/controllers/' . $controllerName . '.php';
-        $controller = new $controllerName();
-        $controller->$actionName();
+        // Proverite da li fajl kontrolera postoji pre nego što ga uključite
+        $controllerFile = 'app/controllers/' . $controllerName . '.php';
+        if (file_exists($controllerFile)) {
+            require $controllerFile;
+            $controller = new $controllerName();
+            $controller->$actionName();
+        } else {
+            echo "Controller file not found: " . $controllerFile;
+        }
     }
 }
